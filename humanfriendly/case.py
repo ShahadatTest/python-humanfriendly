@@ -74,9 +74,9 @@ class CaseInsensitiveDict(collections.OrderedDict):
         """Get the value of an existing item."""
         return super(CaseInsensitiveDict, self).get(self.coerce_key(key), default)
 
-    def pop(self, key, default=None):
+    def pop(self, key, *default):
         """Remove an item from a case insensitive dictionary."""
-        return super(CaseInsensitiveDict, self).pop(self.coerce_key(key), default)
+        return super(CaseInsensitiveDict, self).pop(self.coerce_key(key), *default)
 
     def setdefault(self, key, default=None):
         """Get the value of an existing item or add a new item."""
@@ -95,7 +95,7 @@ class CaseInsensitiveDict(collections.OrderedDict):
         elif other is not None:
             # Complain about unsupported values.
             msg = "'%s' object is not iterable"
-            type_name = type(value).__name__
+            type_name = type(other).__name__
             raise TypeError(msg % type_name)
         # Copy the keyword arguments (if any).
         for key, value in kw.items():
