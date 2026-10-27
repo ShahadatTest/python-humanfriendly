@@ -177,6 +177,7 @@ class HumanFriendlyTestCase(TestCase):
         obj = CaseInsensitiveDict()
         self.assertRaises(KeyError, obj.pop, 'Missing')
         assert obj.pop('Missing', None) is None
+        assert obj.pop('Missing', default=None) is None
         sentinel = object()
         assert obj.pop('Missing', sentinel) is sentinel
 

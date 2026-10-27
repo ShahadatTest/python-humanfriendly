@@ -33,6 +33,8 @@ from humanfriendly.compat import basestring, unicode
 # Public identifiers that require documentation.
 __all__ = ("CaseInsensitiveDict", "CaseInsensitiveKey")
 
+_MISSING = object()
+
 
 class CaseInsensitiveDict(collections.OrderedDict):
 
@@ -74,9 +76,11 @@ class CaseInsensitiveDict(collections.OrderedDict):
         """Get the value of an existing item."""
         return super(CaseInsensitiveDict, self).get(self.coerce_key(key), default)
 
-    def pop(self, key, *default):
+    def pop(self, key, default=_MISSING):
         """Remove an item from a case insensitive dictionary."""
-        return super(CaseInsensitiveDict, self).pop(self.coerce_key(key), *default)
+        if default is _MISSING:
+            return super(CaseInsensitiveDict, self).pop(self.coerce_key(key))
+        return super(CaseInsensitiveDict, self).pop(self.coerce_key(key), default)
 
     def setdefault(self, key, default=None):
         """Get the value of an existing item or add a new item."""
